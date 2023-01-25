@@ -1,8 +1,8 @@
 const express = require('express');
+require('dotenv').config();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
-
 //Routing
 
 
@@ -16,6 +16,9 @@ const editCourse = require('./src/routes/course.route');
 const getCourseType = require('./src/routes/coursetype.route');
 const getCourseTypeView = require('./src/routes/coursetype.route');
 const createCourseType = require('./src/routes/coursetype.route');
+const viewCourseDetails = require('./src/routes/course.route');
+const updateCourse = require('./src/routes/course.route');
+const getMe = require('./src/routes/user.route');
 
 
 //const getEnrolledCourses = require('./src/routes/course.route');
@@ -70,6 +73,10 @@ app.get('/get_Course_Type_View', getCourseTypeView);
 app.get('/edit_Course/:id', editCourse);
 app.get('/get_Enrolled_Students', getEnrolledStudents);
 app.post('/enroll_Student', enrollStudent);
+app.get('/view_Course_Details/:id', viewCourseDetails);
+app.put('/update_Course/:id', updateCourse);
+app.get('/me',getMe);
+
 
 
 //PORT

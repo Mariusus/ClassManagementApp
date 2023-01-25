@@ -124,7 +124,6 @@ class AddCourse extends Component{
                                     className="form-control" 
                                     id="status" 
                                     name="status"
-                                    readOnly
                                     value={this.state.status === true ? "Active" : "Inactive"}
                                     />
                             </div>

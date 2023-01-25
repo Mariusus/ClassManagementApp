@@ -76,13 +76,13 @@ class TeacherEditProfile extends Component{
                         <div className="col-md-12">
                             <div className="card">
                                 <div className="card-header bg-primary text-white">
-                                    <strong>EDIT USER PROFILE</strong>
+                                    <strong>Edit Student Profile</strong>
                                 </div>
                                 <div className="card-body">
                                     <table className="table table-striped">
                                         <tbody>
                                             <tr>
-                                                <td>USER NAME</td>
+                                                <td>Student Name</td>
                                                 <td>
                                                     <input type="text" 
                                                             onChange={this.onChange}
@@ -108,7 +108,7 @@ class TeacherEditProfile extends Component{
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>EMAIL</td>
+                                                <td>Email</td>
                                                 <td>
                                                     <input  type="email" 
                                                             onChange={this.onChange}
@@ -121,7 +121,7 @@ class TeacherEditProfile extends Component{
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>GENDER</td>
+                                                <td>Gednder</td>
                                                 <td>
                                                     <select  type="text" 
                                                             onChange={this.onChange}
@@ -150,7 +150,7 @@ class TeacherEditProfile extends Component{
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>STATUS</td>
+                                                <td>Status</td>
                                                 <td>
                                                     <select  type="text" 
                                                             onChange={this.onChange}
@@ -167,7 +167,7 @@ class TeacherEditProfile extends Component{
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>ROLE</td>
+                                                <td>Role</td>
                                                 <td>
                                                     {this.props.auth.student.role}
                                                 </td>

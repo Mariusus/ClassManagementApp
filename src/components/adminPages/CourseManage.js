@@ -13,7 +13,7 @@ class CourseManage extends Component {
                     <div className="col-md-12 courseadd">
                         <Link to='/add_Course' 
                             className="fas fa-plus btn btn-primary float-right">
-                                ADD COURSE
+                                Create A Course
                         </Link>
                     </div>
                 </div>

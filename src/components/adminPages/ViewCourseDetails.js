@@ -14,7 +14,8 @@ class ViewCourseDetails extends Component{
             teacher_name: "",
             course_type: "",
             course_size: "",
-            status: ""
+            status: "",
+          //  editedBy: ""
         }
     }
 
@@ -29,7 +30,7 @@ class ViewCourseDetails extends Component{
                   course_type: res.data.course_type,
                   course_size: res.data.course_size,
                   status: res.data.status,
-                  editedBy: res.data.editedBy.name
+                //  editedBy: res.data.editedBy.teacher_name
                 });
             })
             .catch((err) =>{

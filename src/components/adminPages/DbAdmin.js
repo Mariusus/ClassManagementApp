@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {getCourses} from '../../actions/authentication';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class DbAdmin extends Component{
 
@@ -11,7 +11,7 @@ class DbAdmin extends Component{
 
     render(){
 
-        const coursesAmount = this.props.courses.viewCourse.length;
+        const coursesAmount = this.props.courses.viewCourse;
 
         return(
             <div className="dashboard">
@@ -19,8 +19,11 @@ class DbAdmin extends Component{
                     <div className="col-md-4">
                         <div className="db1">
                             <h4>All Current Courses</h4>
-                            <p>{coursesAmount}</p>
-                           
+                            {coursesAmount.map(course => 
+                            <li key={course._id}>
+                              <Link to={`/view_Course_Details/${course._id}`}>{course.course_name}</Link>
+                            </li>
+                            )}
                         </div>
                     </div>
                 </div>

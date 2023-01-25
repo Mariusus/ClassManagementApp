@@ -40,6 +40,10 @@ let StudentsSchema = new Schema({
         type: String, 
         required: true
     },
+    confirmed: {
+        type: Boolean,
+        default: false
+      }
   //  inCourse: {
   //      type: ObjectId, 
     //    required: false

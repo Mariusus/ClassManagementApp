@@ -109,7 +109,7 @@ class TeacherEditCourse extends Component{
                                                 /></td>
                                             </tr>
                                             <tr>
-                                                <td>STATUS</td>
+                                                <td>Status</td>
                                                 <td>{this.state.status === true ? "Active" : "Inactive"}</td>
                                             </tr>
                                         </tbody>

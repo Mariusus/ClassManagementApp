@@ -78,15 +78,15 @@ router.put('/update_Course/:id', (req,res,next) =>{
 
 })
 
-router.put('/update_Course/:id', (req,res,next) =>{
-    Courses.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err,result) {
-        if (err) return next(err);
-        res.json({
-            status: 200,
-            result: result
-        })
-    });
-})
+// router.put('/update_Course/:id', (req,res,next) =>{
+//     Courses.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err,result) {
+//         if (err) return next(err);
+//         res.json({
+//             status: 200,
+//             result: result
+//         })
+//     });
+// })
 
 router.delete('/delete_Course/:id',(req,res,next) => {
     Courses.findByIdAndDelete({_id:req.params.id}, function (err) {

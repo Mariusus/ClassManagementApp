@@ -8,6 +8,7 @@ const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
  //const validateProfile = require('../validation/profile');
 
+ const mailer = require('../mailer')
 
 //API Call for Register form
 router.post('/register', function (req, res) {
@@ -44,10 +45,15 @@ router.post('/register', function (req, res) {
                         else {
                             register.password = hash;
                             register
-                                .save()
+                                .save()                          
                                 .then(student => {
-                                    res.json(student)
+                                    res.json(student)                        
                                 }); 
+                          //  const secretToken = randomString.generate()
+                           const html = 'Hello there, <br/> Your registration is almost complete<br/> <br/>Verify your email below by inserting the provided token:<br/> Token: <b></b><br/>On the following page: <a href="http://localhost:5000/verify"> http://localhost:5000/verify</a><br/><br/>'
+                        
+                                mailer.sendMail('ClassManagement@app.com', req.body.email, 'Class Management Verify', html)
+                                console.log('success', 'Please check your email')
                         }
                     });
                 }
@@ -107,17 +113,18 @@ router.post('/login', function (req, res) {
 })
 
 router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
-    
+   
     return res.json({
-        id: req.student.id,
-        name: req.student.name,
-        surname: req.student.surname,
-        email: req.student.email,
-        gender:req.student.gender,
-        phoneNo:req.student.phoneNo,
-        role:req.student.role
+        id: req.user.id,
+        name: req.user.name,
+        surname: req.user.surname,
+        email: req.user.email,
+        gender:req.user.gender,
+        phoneNo:req.user.phoneNo,
+        role:req.user.role
 
     });
+   
 });
 
 // API to get all the student information
@@ -170,5 +177,63 @@ router.put('/active_Student/:id', (req,res,next) =>{
         })
     });
 })
+
+
+router.post('/reset_Password', async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      const user = await StudentsSchema.findOne({email});
+      if (!user) { return res.status(422).send("User doesn't exists!"); }
+  
+      const hasHash = await AccessHash.findOne({userId: StudentsSchema._id});
+      if (hasHash) { return res.status(422).send("Email to reset password was already sent!"); }
+  
+      const hash = new AccessHash({userId: StudentsSchema._id});
+      await hash.save();
+      await sendResetPasswordEmail({toUser: StudentsSchema, hash: hash._id});
+      return res.json({message: 'Please check your email to reset the password!'})
+    } catch {
+      return res.status(422).send('Ooops, something went wrong!');
+    }
+  })
+  
+  router.post('/reset_Password/confirm', async (req, res) => {
+    const { password, hash } = req.body;
+  
+    try {
+      const aHash = await AccessHash.findOne({_id: hash});
+      if (!aHash || !aHash.userId) {
+        return res.status(422).send('Cannot reset a password!');
+      }
+  
+      const user = await StudentsSchema.findOne({_id: aHash.userId});
+      if (!user) {
+        return res.status(422).send('Cannot reset a password!');
+      }
+  
+      await user.remove();
+      await aHash.remove();
+      const newUser = new StudentsSchema({...user, password});
+      await newUser.hashPassword();
+      await newUser.save();
+      return res.json({message: 'Password has been reseted!'});
+    } catch {
+      return res.status(422).send('Ooops, something went wrong!');
+    }
+  })
+  
+  router.get('/activate/user/:hash', async (req, res) => {
+    const { hash } = req.params;
+    try {
+      const user = await StudentsSchema.findOne({_id: hash});
+      const newUser = new StudentsSchema({...user});
+      await newUser.save();
+      await user.remove();
+      res.json({message: `User ${hash} has been activated`})
+    } catch {
+      res.status(422).send('User cannot be activated!');
+    }
+  })
 
 module.exports = router;    

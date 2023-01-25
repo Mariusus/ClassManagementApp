@@ -13,7 +13,8 @@ class EditCourse extends Component{
             course_name: "",
             teacher_name: "",
            course_type: "",
-            course_size: ""
+            course_size: "",
+            status: "Inactive"
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -29,11 +30,16 @@ class EditCourse extends Component{
         e.preventDefault();
         this.props.logoutUser();
     };
+    statusChange = e => {
+        this.setState({  
+            status: e.target.value
+        });  
+    }
 
     componentDidMount() {
         this.props.getCourseType();
 
-        axios.get('http://localhost:5000/get_Course_Type/'+this.props.match.params.id)
+        axios.get('http://localhost:5000/edit_Course/'+this.props.match.params.id)
             .then(res => {
                 this.setState({ 
                     course_id: res.data.course_id, 
@@ -160,15 +166,17 @@ class EditCourse extends Component{
                                             <tr>
                                                 <td>Status</td>
                                                 <td>
-                                                    <select type="text" 
-                                                        onChange={this.onChange}
+                                                    <select type="radio" 
+                                                     
                                                         className="form-control" 
                                                         id="status"
                                                         name="status"
                                                         value={this.state.status}
+                                                        checked={this.state.status === "Active"}
+                                                        onChange={this.statusChange}
                                                     >
-                                                        <option>true</option> 
-                                                        <option>false</option>  
+                                                        <option>Active</option> 
+                                                        <option>Inactive</option>  
                                                     </select>
                                                 </td>
                                             </tr>

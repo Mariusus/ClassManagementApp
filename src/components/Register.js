@@ -82,11 +82,16 @@ class Register extends Component {
         if(this.props.auth.isAuthenticated) {
             this.props.history.push('/');
         }
+   
+          this.setState({ loading: false })
+   
     }
     
 
     render() {
-        
+        if (this.state.loading) {
+            return <Spinner size='8x' spinning='spinning' />
+          }
         const { errors } = this.state;
         return (
            

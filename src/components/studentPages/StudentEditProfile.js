@@ -146,6 +146,7 @@ class StudentEditProfile extends Component{
                                                             placeholder="status" 
                                                             name="status"
                                                             value={this.state.status}
+                                                            readOnly
                                                     />
                                                 </td>
                                             </tr>
